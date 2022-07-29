@@ -1,4 +1,5 @@
-import { Response, Request } from 'express';
+import { Response, Request, NextFunction } from 'express';
+import { HTTPError } from './../errors/http-erros.class.js';
 import { BaseController } from "../common/base.controller.js";
 import { LoggerService } from "../logger/logger.service.js";
 
@@ -12,11 +13,11 @@ export class UserController extends BaseController {
         ]);
     }
 
-    public login(req: Request, res: Response) {
-        this.ok(res, 'Вошел');
+    public login(req: Request, res: Response, next: NextFunction) {
+        next(new HTTPError(401, 'Не авторизован', 'users'));
     }
 
-    public register(req: Request, res: Response) {
+    public register(req: Request, res: Response, next: NextFunction) {
         this.ok(res, 'Зарегистрирован');
     }
 }
