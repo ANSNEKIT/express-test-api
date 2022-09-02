@@ -5,26 +5,26 @@ import 'reflect-metadata';
 
 @injectable()
 export class LoggerService implements ILogger {
-    public logger: Logger;
+	public logger: Logger;
 
-    constructor() {
-        this.logger = new Logger({
-            displayInstanceName: false,
-            displayLoggerName: false,
-            displayFunctionName: false,
-            displayFilePath: 'hidden',
-        });
-    }
+	constructor() {
+		this.logger = new Logger({
+			displayInstanceName: false,
+			displayLoggerName: false,
+			displayFunctionName: false,
+			displayFilePath: 'hidden',
+		});
+	}
 
-    log(...agrs: unknown[]): void {
-        this.logger.info(...agrs);
-    }
+	log(...agrs: unknown[]): void {
+		this.logger.info(...agrs);
+	}
 
-    error(...agrs: unknown[]): void {
-        this.logger.error(...agrs);
-    }
+	error(...agrs: unknown[]): void {
+		this.logger.error(...agrs);
+	}
 
-    warn(...agrs: unknown[]): void {
-        this.logger.warn(...agrs);
-    }
+	warn(...agrs: unknown[]): void {
+		this.logger.warn(...agrs);
+	}
 }
