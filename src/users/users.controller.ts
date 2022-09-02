@@ -18,7 +18,7 @@ export class UserController extends BaseController implements IUserController {
 		]);
 	}
 
-	public login(req: Request, res: Response, next: NextFunction): void {
+	public login(req: Request, res: Response, next: NextFunction): void {		
 		next(new HTTPError(401, 'Не авторизован', 'users'));
 	}
 
