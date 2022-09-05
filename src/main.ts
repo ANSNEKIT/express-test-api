@@ -1,11 +1,11 @@
 import { IExeptionFilter } from './errors/exeption.filter.interface';
 import { Container, ContainerModule, interfaces } from 'inversify';
-import { ExeptionFilter } from './errors/exeption.filter.js';
-import App from './app.js';
-import { LoggerService } from './logger/logger.service.js';
-import { UserController } from './users/users.controller.js';
-import { ILogger } from './logger/logger.interface.js';
-import { TYPES } from './types.js';
+import { ExeptionFilter } from './errors/exeption.filter';
+import App from './app';
+import { LoggerService } from './logger/logger.service';
+import { UserController } from './users/users.controller';
+import { ILogger } from './logger/logger.interface';
+import { TYPES } from './types';
 import { IUserController } from './users/users.controller.interface';
 
 export interface IBootReturn {
