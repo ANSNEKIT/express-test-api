@@ -6,6 +6,9 @@ import { HTTPError } from './../errors/http-erros.class';
 import { BaseController } from '../common/base.controller';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
+import { UserLoginDto } from './dto/user-login.dto';
+import UserRegisterDto from './dto/user-register.dto';
+import { User } from './user.entity';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -13,16 +16,27 @@ export class UserController extends BaseController implements IUserController {
 		super(loggerService);
 
 		this.bindRoutes([
-			{ method: 'get', path: '/login', func: this.login },
-			{ method: 'get', path: '/register', func: this.register },
+			{ method: 'post', path: '/login', func: this.login },
+			{ method: 'post', path: '/register', func: this.register },
 		]);
 	}
 
-	public login(req: Request, res: Response, next: NextFunction): void {
+	public login(
+		req: Request<Record<string, unknown>, Record<string, unknown>, UserLoginDto>,
+		res: Response,
+		next: NextFunction,
+	): void {
+		console.log(req.body);
 		next(new HTTPError(401, 'Не авторизован', 'users'));
 	}
 
-	public register(req: Request, res: Response, next: NextFunction): void {
-		this.ok(res, 'Зарегистрирован');
+	public async register(
+		{ body }: Request<Record<string, unknown>, Record<string, unknown>, UserRegisterDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const user = new User(body.email, body.name);
+		await user.setPassword(body.password);
+		this.ok(res, user);
 	}
 }
