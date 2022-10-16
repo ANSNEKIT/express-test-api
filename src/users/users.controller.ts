@@ -8,7 +8,6 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../types';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
-import { User } from './user.entity';
 import { ValidateMiddleware } from '../common/validate.middleware';
 import { IUserService } from './user.servise.interface';
 
