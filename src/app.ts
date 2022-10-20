@@ -9,6 +9,7 @@ import { TYPES } from './types';
 import 'reflect-metadata';
 import { json } from 'body-parser';
 import { IExeptionFilter } from './errors/exeption.filter.interface';
+import { PrismaServise } from './database/prisma.service';
 
 @injectable()
 export default class App {
@@ -21,6 +22,7 @@ export default class App {
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.ExeptionFilter) private exeptionFilter: IExeptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.PrismaServise) private prismaservise: PrismaServise,
 	) {
 		this.app = express();
 		this.port = 8000;
@@ -42,6 +44,7 @@ export default class App {
 		this.useMiddleware();
 		this.useRoutes();
 		this.useExeptionFilters();
+		await this.prismaservise.connect();
 		this.server = this.app.listen(this.port);
 		this.logger.log(`Сервер запущен. Прослушиваю порт ${this.port}`);
 	}
