@@ -18,7 +18,6 @@ export class UserService implements IUserService {
 	async createUser({ email, password, name }: UserRegisterDto): Promise<UserModel | null> {
 		const newUser = new User(email, name);
 		const salt = this.configService.get('SALT');
-		console.log(salt);
 		await newUser.setPassword(password, Number(salt));
 
 		const existedUser = await this.usersRepository.find(email);
@@ -28,8 +27,15 @@ export class UserService implements IUserService {
 
 		return this.usersRepository.create(newUser);
 	}
-	// eslint-disable-next-line no-empty-pattern
-	async validateUser({}: UserLoginDto): Promise<boolean> {
-		return true;
+
+	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
+		const existedUser = await this.usersRepository.find(email);
+		if (!existedUser) {
+			return false;
+		}
+
+		const newUser = new User(existedUser.email, existedUser.name, existedUser.password);
+
+		return newUser.comparePassword(password);
 	}
 }
