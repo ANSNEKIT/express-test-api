@@ -8,10 +8,12 @@ import { UserController } from './users/users.controller';
 import { ILogger } from './logger/logger.interface';
 import { TYPES } from './types';
 import { IUserController } from './users/users.controller.interface';
-import { IUserService } from './users/user.servise.interface';
-import { UserService } from './users/user.service';
+import { IUserService } from './users/users.servise.interface';
+import { UserService } from './users/users.service';
 import { ConfigService } from './config/config.service';
 import { PrismaServise } from './database/prisma.service';
+import { IUsersRepository } from './users/users.repository.interface';
+import UsersRepository from './users/users.repository';
 
 export interface IBootReturn {
 	app: App;
@@ -25,6 +27,7 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IUserService>(TYPES.UserService).to(UserService);
 	bind<PrismaServise>(TYPES.PrismaServise).to(PrismaServise).inSingletonScope();
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
+	bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 

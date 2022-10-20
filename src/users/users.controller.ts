@@ -9,7 +9,7 @@ import { TYPES } from '../types';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { ValidateMiddleware } from '../common/validate.middleware';
-import { IUserService } from './user.servise.interface';
+import { IUserService } from './users.servise.interface';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -50,6 +50,6 @@ export class UserController extends BaseController implements IUserController {
 			return next(new HTTPError(422, 'Такой пользователь уже существует'));
 		}
 
-		this.ok(res, { email: user.email });
+		this.ok(res, { email: user.email, id: user.id });
 	}
 }
